@@ -1,4 +1,4 @@
-<style>
+﻿<style>
     .demo-theme-color-item {
         display: table-cell;
         width: 36px;
@@ -20,10 +20,10 @@
         }
 </style>
 <div>
-    @foreach ( var color in ThemeColors.Items.Values )
+    @foreach (var color in ThemeColors.Items.Values)
     {
         <div>
-            @foreach ( var shade in color.Shades.Values )
+            @foreach (var shade in color.Shades.Values)
             {
                 var temp = shade.Value;
 
@@ -39,28 +39,28 @@
         get => _value;
         set
         {
-            if ( value == _value )
+            if (value == _value)
             {
                 return;
             }
             _value = value;
             this.StateHasChanged();
-            ValueChanged.InvokeAsync( value );
+            ValueChanged.InvokeAsync(value);
         }
     }
 
-    string ClassNames( string value )
-        => $"demo-theme-color-item{( value == Value ? " selected" : "" )}";
+    string ClassNames(string value)
+        => $"demo-theme-color-item{(value == Value ? " selected" : "")}";
 
     [Parameter]
     public EventCallback<string> ValueChanged { get; set; }
 
     private string _value;
 
-    Task OnClick( string value )
+    Task OnClick(string value)
     {
         Value = value;
 
         return Task.CompletedTask;
     }
-}
+} 

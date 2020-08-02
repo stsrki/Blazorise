@@ -1,0 +1,63 @@
+﻿<Card Margin="Margin.Is3.OnAll">
+    <CardHeader>
+        <Paragraph Margin="Margin.IsAuto" Color="TextColor.Black50">
+            <CardTitle>Theme Settings</CardTitle>
+        </Paragraph>
+    </CardHeader>
+    <CardBody>
+        <Tabs TabPosition="TabPosition.Left" SelectedTab="@SelectedTab" SelectedTabChanged="@OnSelectedTabChanged">
+            <Items>
+                <Tab Name="General">General</Tab>
+                <Tab Name="Alert">Alert</Tab>
+                <Tab Name="Background">Background</Tab>
+                <Tab Name="Badge">Badge</Tab>
+                <Tab Name="Bar">Bar</Tab>
+                <Tab Name="Breadcrumb">Breadcrumb</Tab>
+                <Tab Name="Breakpoint">Breakpoint</Tab>
+                <Tab Name="Button">Button</Tab>
+                <Tab Name="Card">Card</Tab>
+                <Tab Name="Color">Color</Tab>
+                <Tab Name="Container">Container</Tab>
+                <Tab Name="Divider">Divider</Tab>
+                <Tab Name="Dropdown">Dropdown</Tab>
+                <Tab Name="Input">Input</Tab>
+                <Tab Name="Modal">Modal</Tab>
+                <Tab Name="Pagination">Pagination</Tab>
+                <Tab Name="Progress">Progress</Tab>
+                <Tab Name="Sidebar">Sidebar</Tab>
+                <Tab Name="Snackbar">Snackbar</Tab>
+                <Tab Name="Switch">Switch</Tab>
+                <Tab Name="Table">Table</Tab>
+                <Tab Name="Tabs">Tabs</Tab>
+                <Tab Name="Text">Text</Tab>
+                <Tab Name="Tooltip">Tooltip</Tab>
+            </Items>
+            <Content>
+                <TabPanel Name="General"><ThemeGeneralOptionsFragment /></TabPanel>
+                <TabPanel Name="Alert"><ThemeAlertOptionsFragment /></TabPanel>
+                <TabPanel Name="Background"><ThemeBackgroundOptionsFragment /></TabPanel>
+                <TabPanel Name="Badge"><ThemeBadgeOptionsFragment /></TabPanel>
+                <TabPanel Name="Bar"><ThemeBarOptionsFragment /></TabPanel>
+                <TabPanel Name="Breadcrumb"><ThemeBreadcrumbOptionsFragment /></TabPanel>
+                <TabPanel Name="Breakpoint"><ThemeBreakpointOptionsFragment /></TabPanel>
+                <TabPanel Name="Button"><ThemeButtonOptionsFragment /></TabPanel>
+                <TabPanel Name="Card"><ThemeCardOptionsFragment /></TabPanel>
+                <TabPanel Name="Color"><ThemeColorOptionsFragment /></TabPanel>
+                <TabPanel Name="Container"><ThemeContainerOptionsFragment /></TabPanel>
+                <TabPanel Name="Divider"><ThemeDividerOptionsFragment /></TabPanel>
+                <TabPanel Name="Dropdown"><ThemeDropdownOptionsFragment /></TabPanel>
+                <TabPanel Name="Input"><ThemeInputOptionsFragment /></TabPanel>
+                <TabPanel Name="Modal"><ThemeModalOptionsFragment /></TabPanel>
+                <TabPanel Name="Pagination"><ThemePaginationOptionsFragment /></TabPanel>
+                <TabPanel Name="Progress"><ThemeProgressOptionsFragment /></TabPanel>
+                <TabPanel Name="Sidebar"><ThemeSidebarOptionsFragment /></TabPanel>
+                <TabPanel Name="Snackbar"><ThemeSnackbarOptionsFragment /></TabPanel>
+                <TabPanel Name="Switch"><ThemeSwitchOptionsFragment /></TabPanel>
+                <TabPanel Name="Table"><ThemeTableOptionsFragment /></TabPanel>
+                <TabPanel Name="Tabs"><ThemeTabsOptionsFragment /></TabPanel>
+                <TabPanel Name="Text"><ThemeTextOptionsFragment /></TabPanel>
+                <TabPanel Name="Tooltip"><ThemeTooltipOptionsFragment /></TabPanel>
+            </Content>
+        </Tabs>
+    </CardBody>
+</Card>

@@ -122,7 +122,12 @@
                                 </BarDropdownToggle>
                                 <BarDropdownMenu>
                                     <BarDropdownItem To="apps/todo">
+                                        <BarIcon IconName="IconName.CheckDouble" />
                                         Todo
+                                    </BarDropdownItem>
+                                    <BarDropdownItem To="apps/theme">
+                                        <BarIcon IconName="IconName.Palette" />
+                                        Theme
                                     </BarDropdownItem>
                                 </BarDropdownMenu>
                             </BarDropdown>
@@ -168,8 +173,17 @@
                     </BarStart>
                     <BarEnd>
                         <BarItem>
+                            <BarLink To="apps/theme">
+                                <Icon Name="IconName.Palette" />
+                                Theme Builder
+                            </BarLink>
+                        </BarItem>
+                        <BarItem>
                             <BarDropdown>
-                                <BarDropdownToggle><Icon Name="IconName.Tint" /> Theme</BarDropdownToggle>
+                                <BarDropdownToggle>
+                                    <Icon Name="IconName.Tint" />
+                                    Quick Theme
+                                </BarDropdownToggle>
                                 <BarDropdownMenu Style="padding: 15px; min-width:550px;" RightAligned="true">
                                     <Row>
                                         <Column Margin="Margin.Is2.FromBottom">
@@ -274,7 +288,6 @@
 
         Theme.ThemeHasChanged();
     }
-
 
     private bool siderVisible = true;
     private bool uiElementsVisible = true;
