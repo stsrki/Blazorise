@@ -242,6 +242,19 @@
                             </FieldBody>
                         </Field>
                     </Validation>
+
+                    <Validation Validator="@ValidValue">
+                        <Field Horizontal="true">
+                            <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Mask Edit</FieldLabel>
+                            <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
+                                <MaskEdit Currency="R$" @bind-Text="@itemPrice">
+                                    <Feedback>
+                                        <ValidationError>The value is not valid!</ValidationError>
+                                    </Feedback>
+                                </MaskEdit>
+                            </FieldBody>
+                        </Field>
+                    </Validation>
                     <Field Horizontal="true" JustifyContent="JustifyContent.End">
                         <FieldBody ColumnSize="ColumnSize.Is10.Is2.WithOffset">
                             <Button Color="Color.Primary" Clicked="@Submit">Submit</Button>
@@ -520,6 +533,26 @@
     User manualUser = new User();
 
     string password;
+    string itemPrice;
+
+    void ValidValue( ValidatorEventArgs e )
+    {
+        decimal itemValue;
+
+        e.Status = ValidationStatus.Error;
+
+        if ( string.IsNullOrEmpty( Convert.ToString( e.Value ) ) )
+            return;
+
+
+        if ( decimal.TryParse( e.Value.ToString(), out itemValue ) )
+        {
+            if ( itemValue > 0 )
+                e.Status = ValidationStatus.Success;
+
+        }
+
+    }
 
     Random random = new Random();
 
