@@ -1,8 +1,10 @@
 ﻿#region Using directives
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+
 #endregion
 
 namespace Blazorise.DataGrid
@@ -152,7 +154,6 @@ namespace Blazorise.DataGrid
         {
             get
             {
-
                 var lastPage = Math.Max( (int)Math.Ceiling( ( TotalItems ?? 0 ) / (double)currentPageSize ), 1 );
 
                 if ( CurrentPage > lastPage )
@@ -219,7 +220,7 @@ namespace Blazorise.DataGrid
         public int? TotalItems
         {
             // If we're using ReadData than TotalItems must be set so we can know how many items are available
-            get => ( parentDataGrid.ManualReadMode ? totalItems : parentDataGrid.FilteredData?.Count() ) ?? 0;
+            get => ( ( parentDataGrid.ManualReadMode || parentDataGrid.VirtualizeManualReadMode ) ? totalItems : parentDataGrid.FilteredData?.Count() ) ?? 0;
             set
             {
                 if ( totalItems != value )

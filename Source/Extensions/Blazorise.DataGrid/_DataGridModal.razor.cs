@@ -1,9 +1,12 @@
 ﻿#region Using directives
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Blazorise.Localization;
 using Microsoft.AspNetCore.Components;
+
 #endregion
 
 namespace Blazorise.DataGrid
@@ -17,6 +20,9 @@ namespace Blazorise.DataGrid
         protected Validations validations;
 
         protected bool popupVisible;
+
+        protected EventCallback Cancel
+            => EventCallback.Factory.Create( this, ParentDataGrid.Cancel );
 
         #endregion
 
@@ -44,12 +50,14 @@ namespace Blazorise.DataGrid
             InvokeAsync( StateHasChanged );
         }
 
-        protected void SaveWithValidation()
+        protected Task SaveWithValidation()
         {
             var isValid = validations.ValidateAll();
 
             if ( isValid )
-                Save.InvokeAsync( this );
+                return ParentDataGrid.Save();
+
+            return Task.CompletedTask;
         }
 
         #endregion
@@ -98,10 +106,6 @@ namespace Blazorise.DataGrid
         [Parameter] public ModalSize PopupSize { get; set; }
 
         [Parameter] public DataGridEditState EditState { get; set; }
-
-        [Parameter] public EventCallback Save { get; set; }
-
-        [Parameter] public EventCallback Cancel { get; set; }
 
         /// <summary>
         /// Gets or sets the parent <see cref="DataGrid{TItem}"/> of the this component.

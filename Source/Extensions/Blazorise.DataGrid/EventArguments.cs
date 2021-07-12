@@ -1,9 +1,11 @@
 ﻿#region Using directives
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading;
+
 #endregion
 
 namespace Blazorise.DataGrid
@@ -118,15 +120,21 @@ namespace Blazorise.DataGrid
         /// <summary>
         /// Initializes a new instance of read-data event argument.
         /// </summary>
-        /// <param name="page">Page number at the moment of initialization.</param>
-        /// <param name="pageSize">Maximum number of items per page.</param>
+        /// <param name="readDataMode">ReadData Mode.</param>
         /// <param name="columns">List of all the columns in the grid.</param>
         /// <param name="sortByColumns">List of all the columns by which we're sorting the grid.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
-        public DataGridReadDataEventArgs( int page, int pageSize,
+        /// <param name="page">Page number at the moment of initialization.</param>
+        /// <param name="pageSize">Maximum number of items per page.</param>
+        /// <param name="virtualizeStartIndex">Requested data start index by Virtualize.</param>
+        /// <param name="virtualizeCount">Max number of items requested by Virtualize.</param>
+        public DataGridReadDataEventArgs(
+            ReadDataMode readDataMode,
             IEnumerable<DataGridColumn<TItem>> columns,
             IList<DataGridColumn<TItem>> sortByColumns,
-            CancellationToken cancellationToken = default )
+            CancellationToken cancellationToken = default,
+            int page = 0, int pageSize = 0, int virtualizeStartIndex = 0, int virtualizeCount = 0
+            )
         {
             Page = page;
             PageSize = pageSize;
@@ -137,7 +145,25 @@ namespace Blazorise.DataGrid
                 sortByColumns?.IndexOf( x ) ?? -1,
                 x.ColumnType ) );
             CancellationToken = cancellationToken;
+            this.VirtualizeStartIndex = virtualizeStartIndex;
+            this.VirtualizeCount = virtualizeCount;
+            this.ReadDataMode = readDataMode;
         }
+
+        /// <summary>
+        /// Gets the ReadData Mode.
+        /// </summary>
+        public ReadDataMode ReadDataMode { get; }
+
+        /// <summary>
+        /// Gets the requested data start index by Virtualize.
+        /// </summary>
+        public int VirtualizeStartIndex { get; }
+
+        /// <summary>
+        /// Gets the max number of items requested by Virtualize.
+        /// </summary>
+        public int VirtualizeCount { get; }
 
         /// <summary>
         /// Gets the requested page number.

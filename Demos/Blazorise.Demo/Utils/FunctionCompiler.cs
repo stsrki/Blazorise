@@ -1,16 +1,18 @@
-﻿#region Using directives
-
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using Microsoft.AspNetCore.Components.Forms;
+using System.Text;
+using System.Threading.Tasks;
 
-#endregion
-
-namespace Blazorise.DataGrid.Utils
+namespace Blazorise.Demo.Utils
 {
-    internal static class FunctionCompiler
+
+    /// <summary>
+    /// Straight up copy of Datagrid's internal Function Compiler for demo use.
+    /// </summary>
+    public static class FunctionCompiler
     {
         public static Func<TItem> CreateNewItem<TItem>()
         {
@@ -18,7 +20,7 @@ namespace Blazorise.DataGrid.Utils
         }
 
         /// <summary>
-        /// Builds an access expression for nested properties while checking for null values.
+        /// Bulds an access expression for nested properties while checking for null values.
         /// </summary>
         /// <param name="item">Item that has the requested field name.</param>
         /// <param name="propertyOrFieldName">Item field name.</param>
@@ -55,35 +57,6 @@ namespace Blazorise.DataGrid.Utils
                 field );
         }
 
-        private static MemberExpression GetPropertyOrField( Expression item, string propertyOrFieldName )
-        {
-            if ( string.IsNullOrEmpty( propertyOrFieldName ) )
-                throw new ArgumentException( $"{nameof( propertyOrFieldName )} is not specified." );
-
-            var parts = propertyOrFieldName.Split( new char[] { '.' }, 2 );
-
-            MemberExpression field = null;
-
-            MemberInfo memberInfo = GetSafeMember( item.Type, parts[0] );
-
-            if ( memberInfo is PropertyInfo propertyInfo )
-                field = Expression.Property( item, propertyInfo );
-            else if ( memberInfo is FieldInfo fieldInfo )
-                field = Expression.Field( item, fieldInfo );
-
-            if ( field == null )
-                throw new ArgumentException( $"Cannot detect the member of {item.Type}", propertyOrFieldName );
-
-            if ( parts.Length > 1 )
-                field = GetPropertyOrField( field, parts[1] );
-
-            // if the value type cannot be null there's no reason to check it for null
-            if ( !IsNullable( field.Type ) )
-                return field;
-
-            return field;
-        }
-
         // inspired by: https://stackoverflow.com/questions/2496256/expression-tree-with-property-inheritance-causes-an-argument-exception
         private static MemberInfo GetSafeMember( Type type, string fieldName )
         {
@@ -113,6 +86,7 @@ namespace Blazorise.DataGrid.Utils
             return memberInfo;
         }
 
+
         /// <summary>
         /// Checks if requested type can bu nullable.
         /// </summary>
@@ -127,7 +101,7 @@ namespace Blazorise.DataGrid.Utils
         }
 
         /// <summary>
-        /// Builds an access expression for nested properties or fields.
+        /// Bulds an access expression for nested properties or fields.
         /// </summary>
         /// <param name="item">Item that has the requested field name.</param>
         /// <param name="propertyOrFieldName">Item field name.</param>
@@ -157,24 +131,6 @@ namespace Blazorise.DataGrid.Utils
             return subPropertyOrField;
         }
 
-        /// <summary>
-        /// Creates the lambda expression that is suitable for usage with Blazor <see cref="FieldIdentifier"/>.
-        /// </summary>
-        /// <typeparam name="TItem">Type of model that contains the data-annotations.</typeparam>
-        /// <typeparam name="TValue">Return type of validation field.</typeparam>
-        /// <param name="item">An actual instance of the validation model.</param>
-        /// <param name="fieldName">Field name to validate.</param>
-        /// <returns>Expression compatible with <see cref="FieldIdentifier"/> parser.</returns>
-        public static Expression<Func<TValue>> CreateValidationExpressionGetter<TItem, TValue>( TItem item, string fieldName )
-        {
-            var parameter = Expression.Parameter( typeof( TItem ), "item" );
-            var property = GetPropertyOrField( parameter, fieldName );
-
-            var convertExpression = Expression.MakeMemberAccess( Expression.Constant( item ), property.Member );
-
-            return Expression.Lambda<Func<TValue>>( convertExpression );
-        }
-
         public static Func<TItem, object> CreateValueGetter<TItem>( string fieldName )
         {
             var item = Expression.Parameter( typeof( TItem ), "item" );
@@ -202,9 +158,10 @@ namespace Blazorise.DataGrid.Utils
             var value = Expression.Parameter( typeof( object ), "value" );
 
             // There's ne safe field setter because that should be a developer responsibility
-            // to don't allow for null nested fields.
+            // to don't allow for null nested fields. 
             var field = GetField( item, fieldName );
             return Expression.Lambda<Action<TItem, object>>( Expression.Assign( field, Expression.Convert( value, field.Type ) ), item, value ).Compile();
         }
     }
 }
+
